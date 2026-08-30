@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DoseWear</string>
+    <string name="tile_label">Sıradaki doz</string>
+    <string name="complication_label">DoseWear – sıradaki doz</string>
+
+    <!-- ============ Ortak ============ -->
+    <string name="save">Kaydet</string>
+    <string name="delete">Sil</string>
+    <string name="delete_confirm">Silmek için tekrar dokun</string>
+    <string name="edit">Düzenle</string>
+    <string name="close">Kapat</string>
+    <string name="loading">Yükleniyor…</string>
+    <string name="on">açık</string>
+    <string name="off">kapalı</string>
+
+    <!-- ============ Günler ============ -->
+    <string-array name="day_short">
+        <item>Pzt</item>
+        <item>Sal</item>
+        <item>Çar</item>
+        <item>Per</item>
+        <item>Cum</item>
+        <item>Cmt</item>
+        <item>Paz</item>
+    </string-array>
+    <string name="days_everyday">Her gün</string>
+    <string name="days_weekdays">Hafta içi</string>
+    <string name="days_weekend">Hafta sonu</string>
+    <string name="days_none">Gün seçilmedi</string>
+    <string name="day_today">Bugün</string>
+    <string name="day_yesterday">Dün</string>
+    <string name="day_tomorrow">Yarın</string>
+
+    <!-- ============ Göreli zaman ============ -->
+    <string name="rel_in">%s sonra</string>
+    <string name="rel_ago">%s önce</string>
+    <string name="rel_days">%1$d gün %2$d sa</string>
+    <string name="rel_hours">%1$d sa %2$d dk</string>
+    <string name="rel_minutes">%1$d dk</string>
+    <string name="rel_seconds">birkaç saniye</string>
+
+    <!-- ============ Birimler ============ -->
+    <string name="unit_pcs">adet</string>
+    <string name="unit_ml">ml</string>
+    <string name="unit_drop">damla</string>
+    <string name="unit_scoop">ölçek</string>
+    <string name="unit_mg">mg</string>
+
+    <!-- ============ Doz durumu ============ -->
+    <string name="status_pending">Bekliyor</string>
+    <string name="status_taken">Alındı</string>
+    <string name="status_snoozed">Ertelendi</string>
+    <string name="status_skipped">Atlandı</string>
+    <string name="status_missed">Kaçırıldı</string>
+
+    <!-- ============ Doz aksiyonları ============ -->
+    <string name="action_take">Aldım</string>
+    <string name="action_snooze">Ertele</string>
+    <string name="action_skip">Atla</string>
+    <string name="action_take_all">Hepsini aldım (%d)</string>
+    <string name="action_take_all_short">Hepsini aldım</string>
+    <string name="action_snooze_all">Hepsini ertele</string>
+    <string name="action_confirm_each">Tek tek onayla</string>
+
+    <!-- ============ Ana ekran ============ -->
+    <string name="home_today">BUGÜN</string>
+    <string name="home_no_doses">Planlı doz yok</string>
+    <string name="home_streak">%d gün seri</string>
+    <string name="home_no_streak">Seri yok</string>
+    <string name="home_all_done">Tamam</string>
+    <string name="home_next">SIRADAKİ</string>
+    <string name="home_no_reminder">Aktif hatırlatıcı yok</string>
+    <string name="home_pending">Onay bekleyen</string>
+    <string name="home_low_stock">Stok azaldı</string>
+    <string name="home_menu">Menü</string>
+    <string name="menu_supplements">Takviyelerim</string>
+    <string name="menu_supplements_sub">Stok kartları</string>
+    <string name="menu_reminders">Hatırlatıcılar</string>
+    <string name="menu_reminders_sub">Saat ve günler</string>
+    <string name="menu_history">Geçmiş</string>
+    <string name="menu_history_sub">Alınan / kaçırılan</string>
+    <string name="menu_settings">Ayarlar</string>
+    <string name="menu_settings_sub">Alarm, pil, izinler</string>
+    <string name="home_hint">Önce stoğuyla birlikte takviye ekle, sonra hatırlatıcı kur.</string>
+    <string name="stock_out">Stok bitti — satın al</string>
+    <string name="stock_left">%s kaldı</string>
+
+    <!-- ============ Takviyeler ============ -->
+    <string name="supplements_title">Takviyelerim</string>
+    <string name="supplement_new">Yeni takviye</string>
+    <string name="supplement_new_sub">Stok kartı oluştur</string>
+    <string name="supplements_empty">Henüz takviye yok.\nÖnce stok kartı ekle, hatırlatıcıyı sonra kur.</string>
+    <string name="supplement_passive">pasif</string>
+    <string name="pill_out">Bitti</string>
+    <string name="pill_low">Az kaldı</string>
+    <string name="pill_ok">Yeterli</string>
+    <string name="pill_passive">Pasif</string>
+    <string name="section_adjust_stock">Stok düzelt</string>
+    <string name="stock_on_hand">Elde kalan (%s)</string>
+    <string name="bought_more">Satın aldım</string>
+    <string name="bought_more_sub">%s ekle</string>
+    <string name="threshold_hint">Uyarı eşiği: %s.\nBu seviyeye inince satın alma uyarısı gelir.</string>
+    <string name="section_recent">Son hareketler</string>
+    <string name="no_records">Henüz kayıt yok.</string>
+    <string name="section_card">Kart</string>
+    <string name="supplement_edit_sub">İsim, birim, eşik</string>
+    <string name="supplement_delete_sub">Hatırlatıcılardan da çıkar</string>
+
+    <string name="supplement_edit_title">Takviyeyi düzenle</string>
+    <string name="supplement_new_title">Yeni takviye</string>
+    <string name="name_placeholder">İsim gir…</string>
+    <string name="name_hint">Dokun ve yaz</string>
+    <string name="name_field">Takviye adı</string>
+    <string name="strength_placeholder">Doz bilgisi (ops.)</string>
+    <string name="strength_hint">Örn. 1000 IU, 500 mg</string>
+    <string name="strength_field">Doz bilgisi</string>
+    <string name="unit_row">Birim: %s</string>
+    <string name="unit_row_sub">Değiştirmek için dokun</string>
+    <string name="section_stock">Stok</string>
+    <string name="field_on_hand">Elimdeki miktar</string>
+    <string name="field_threshold">Uyarı eşiği (son N)</string>
+    <string name="field_box_size">Bir kutu = kaç %s</string>
+    <string name="section_color">Renk</string>
+    <string name="status_row_active">Durum: aktif</string>
+    <string name="status_row_passive">Durum: pasif</string>
+    <string name="status_row_sub">Pasifken hatırlatıcılarda çıkmaz</string>
+    <string name="supplement_save_hint">Kaydettikten sonra Hatırlatıcılar bölümünden saat kur.</string>
+    <string name="untitled">İsimsiz</string>
+
+    <!-- ============ Hatırlatıcılar ============ -->
+    <string name="reminders_title">Hatırlatıcılar</string>
+    <string name="reminder_new">Yeni hatırlatıcı</string>
+    <string name="reminder_new_sub">Saat ve takviye seç</string>
+    <string name="reminders_empty">Hatırlatıcı yok.\nBir hatırlatıcıya birden fazla takviye ekleyebilirsin;\nher birini ayrı onaylarsın.</string>
+    <string name="reminders_hint">Aynı saate denk gelen ilaçlar tek bildirimde toplanır.</string>
+    <string name="reminder_count">%d ilaç</string>
+    <string name="reminder_edit_title">Hatırlatıcıyı düzenle</string>
+    <string name="reminder_new_title">Yeni hatırlatıcı</string>
+    <string name="field_hour">Saat</string>
+    <string name="field_minute">Dakika (5\'er)</string>
+    <string name="section_days">Günler</string>
+    <string name="preset_everyday">Her gün</string>
+    <string name="preset_weekdays">H.içi</string>
+    <string name="preset_weekend">H.sonu</string>
+    <string name="section_pick">İlaç / takviye seç</string>
+    <string name="add_supplement_first">Önce takviye ekle</string>
+    <string name="add_supplement_first_sub">Stok kartı gerekli</string>
+    <string name="amount_of">%s miktarı</string>
+    <string name="stock_of">stok %s</string>
+    <string name="multi_hint">%d ilaç tek bildirimde gelir, her birini ayrı onaylarsın.</string>
+    <string name="single_hint">Aynı saatte alacağın ilaçları buraya birlikte ekleyebilirsin.</string>
+    <string name="section_snooze">Erteleme</string>
+    <string name="field_snooze">Erteleme süresi</string>
+    <string name="field_jitter">Rastgele sapma (çakışma önleyici)</string>
+    <string name="field_max_snooze">En fazla erteleme</string>
+    <string name="minutes_short">%d dk</string>
+    <string name="minutes_plusminus">± %d dk</string>
+    <string name="times_count">%d kez</string>
+    <string name="snooze_hint">İki dozu erteleyip birini onaylarsan, ertelenenler farklı dakikalara dağılır — birbirini ezmez.</string>
+    <string name="section_other">Diğer</string>
+    <string name="label_placeholder">Etiket ekle (ops.)</string>
+    <string name="label_hint">Örn. Kahvaltı sonrası</string>
+    <string name="label_field">Hatırlatıcı adı</string>
+    <string name="reminder_on">Durum: açık</string>
+    <string name="reminder_off">Durum: kapalı</string>
+    <string name="reminder_status_sub">Kapalıyken alarm kurulmaz</string>
+    <string name="next_preview">Sonraki: %1$s %2$s (%3$s)</string>
+    <string name="reminder_disabled">Kapalı</string>
+    <string name="need_supplement">En az bir ilaç seç</string>
+    <string name="reminder_fallback">Hatırlatıcı</string>
+    <string name="reminder_copy">Kopyala</string>
+    <string name="reminder_copy_sub">Aynı ayarlarla yeni hatırlatıcı</string>
+    <string name="copy_suffix">(kopya)</string>
+
+    <!-- ============ Doz onayı ============ -->
+    <string name="dose_time">Doz zamanı</string>
+    <string name="dose_all_done">Hepsi tamam!</string>
+    <string name="dose_processed">İşlenenler</string>
+    <string name="snoozed_times">%d× ertelendi</string>
+
+    <!-- ============ Geçmiş ============ -->
+    <string name="history_title">Geçmiş</string>
+    <string name="history_empty">Henüz kayıt yok.\nİlk dozunu onayladığında burada görünecek.</string>
+    <string name="history_total">Toplam %d</string>
+    <string name="history_window">Son 7 gün gösteriliyor.</string>
+
+    <!-- ============ Ayarlar ============ -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="section_reliability">Güvenilirlik</string>
+    <string name="perm_exact">Kesin alarm izni</string>
+    <string name="perm_granted">Verildi</string>
+    <string name="perm_missing">Verilmedi — dokun</string>
+    <string name="perm_battery">Pil optimizasyonu</string>
+    <string name="perm_battery_ok">Muaf tutuldu</string>
+    <string name="perm_battery_no">MUAF DEĞİL — dokun</string>
+    <string name="perm_fsi">Tam ekran uyarı izni</string>
+    <string name="perm_notifications">Bildirim ayarları</string>
+    <string name="perm_notifications_sub">Kanal ve titreşim</string>
+    <string name="oem_hint">Agresif üretici katmanları (Xiaomi HyperOS vb.) arka planı kısıtlar. Pil muafiyeti verilmeden gece alarmları kaçabilir.</string>
+    <string name="oem_hint_ok">Xiaomi HyperOS\'ta ayrıca Güvenlik → Pil → Uygulamalar → Kısıtlama yok seç.</string>
+    <string name="settings_open_failed">Bu ekran saatte açılamıyor. Elle git: sistem Ayarları → Uygulamalar → DoseWear → Pil.</string>
+
+    <string name="section_alarm">Alarm davranışı</string>
+    <string name="high_prio_on">Yüksek öncelik: açık</string>
+    <string name="high_prio_off">Yüksek öncelik: kapalı</string>
+    <string name="high_prio_sub_on">setAlarmClock — Doze\'dan muaf</string>
+    <string name="high_prio_sub_off">setExactAndAllowWhileIdle</string>
+    <string name="fullscreen_on">Tam ekran uyarı: açık</string>
+    <string name="fullscreen_off">Tam ekran uyarı: kapalı</string>
+    <string name="fullscreen_sub">Ekranı uyandırır, onay ekranını açar</string>
+    <string name="field_alert_duration">Titreşim süresi</string>
+    <string name="seconds_short">%d sn</string>
+    <string name="alert_duration_hint">Onaylayana ya da erteleyene kadar, en fazla bu süre boyunca kesintisiz titrer.</string>
+    <string name="field_nag_interval">Tekrar aralığı</string>
+    <string name="field_nag_count">Tekrar sayısı</string>
+    <string name="nag_hint">Son tekrardan sonra doz kaçırıldı olarak kaydedilir.</string>
+
+    <string name="section_defaults">Yeni hatırlatıcı varsayılanı</string>
+    <string name="section_maintenance">Bakım</string>
+    <string name="reschedule">Alarmları yeniden kur</string>
+    <string name="reschedule_sub">Tüm zincir sıfırlanır</string>
+    <string name="reschedule_done">Alarmlar yeniden kuruldu.</string>
+    <string name="version">Sürüm %s</string>
+
+    <!-- ============ Bildirimler ============ -->
+    <string name="chan_dose">Doz hatırlatıcı</string>
+    <string name="chan_dose_desc">İlaç/takviye alma zamanı geldiğinde uyarır</string>
+    <string name="chan_stock">Stok uyarısı</string>
+    <string name="chan_stock_desc">Bir takviyenin stoğu azaldığında uyarır</string>
+    <string name="notif_title_multi">%1$d ilaç • %2$s</string>
+    <string name="notif_title_single">%1$s • %2$s</string>
+    <string name="notif_urgent_1">❗ Hatırlatma\n</string>
+    <string name="notif_urgent_2">‼️ Hâlâ onaylanmadı\n</string>
+    <string name="notif_low_title">%s azaldı</string>
+    <string name="notif_low_empty">Stok bitti!</string>
+    <string name="notif_low_left">Sadece %s kaldı</string>
+    <string name="notif_low_body">%1$s\nYeni kutu aldıysan onayla; stok %2$s artsın.</string>
+    <string name="notif_bought">Satın aldım (+%s)</string>
+    <string name="notif_later">Sonra</string>
+
+    <!-- ============ Tile / complication ============ -->
+    <string name="tile_pending_many">%d doz bekliyor</string>
+    <string name="tile_pending_sub">Onay bekliyor • %s</string>
+    <string name="tile_none">Hatırlatıcı yok</string>
+    <string name="tile_none_sub">Uygulamadan ekle</string>
+    <string name="tile_today">Bugün %1$d/%2$d</string>
+    <string name="tile_today_none">Bugün planlı doz yok</string>
+    <string name="comp_title">Doz</string>
+    <string name="comp_pending">Bekliyor</string>
+    <string name="comp_none">Doz yok</string>
+    <string name="comp_desc">DoseWear: sıradaki doz</string>
+</resources>

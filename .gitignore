@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+/build
+build/
+/captures
+.externalNativeBuild
+.cxx
+.kotlin/
+
+# Local config — machine specific, never commit
+local.properties
+/local.properties
+
+# IDE
+*.iml
+.idea/
+
+# Signing — never commit keys
+*.jks
+*.keystore
+keystore.properties
+
+# OS
+.DS_Store
+Thumbs.db

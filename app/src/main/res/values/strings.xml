@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DoseWear</string>
+    <string name="tile_label">Next dose</string>
+    <string name="complication_label">DoseWear – next dose</string>
+
+    <!-- ============ Common ============ -->
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="delete_confirm">Tap again to delete</string>
+    <string name="edit">Edit</string>
+    <string name="close">Close</string>
+    <string name="loading">Loading…</string>
+    <string name="on">on</string>
+    <string name="off">off</string>
+
+    <!-- ============ Days ============ -->
+    <string-array name="day_short">
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
+    <string name="days_everyday">Every day</string>
+    <string name="days_weekdays">Weekdays</string>
+    <string name="days_weekend">Weekend</string>
+    <string name="days_none">No day selected</string>
+    <string name="day_today">Today</string>
+    <string name="day_yesterday">Yesterday</string>
+    <string name="day_tomorrow">Tomorrow</string>
+
+    <!-- ============ Relative time ============ -->
+    <string name="rel_in">in %s</string>
+    <string name="rel_ago">%s ago</string>
+    <string name="rel_days">%1$dd %2$dh</string>
+    <string name="rel_hours">%1$dh %2$dm</string>
+    <string name="rel_minutes">%1$d min</string>
+    <string name="rel_seconds">a few seconds</string>
+
+    <!-- ============ Units ============ -->
+    <string name="unit_pcs">pcs</string>
+    <string name="unit_ml">ml</string>
+    <string name="unit_drop">drops</string>
+    <string name="unit_scoop">scoop</string>
+    <string name="unit_mg">mg</string>
+
+    <!-- ============ Dose status ============ -->
+    <string name="status_pending">Waiting</string>
+    <string name="status_taken">Taken</string>
+    <string name="status_snoozed">Snoozed</string>
+    <string name="status_skipped">Skipped</string>
+    <string name="status_missed">Missed</string>
+
+    <!-- ============ Dose actions ============ -->
+    <string name="action_take">Taken</string>
+    <string name="action_snooze">Snooze</string>
+    <string name="action_skip">Skip</string>
+    <string name="action_take_all">Take all (%d)</string>
+    <string name="action_take_all_short">Take all</string>
+    <string name="action_snooze_all">Snooze all</string>
+    <string name="action_confirm_each">Confirm each</string>
+
+    <!-- ============ Home ============ -->
+    <string name="home_today">TODAY</string>
+    <string name="home_no_doses">No doses planned</string>
+    <string name="home_streak">%d day streak</string>
+    <string name="home_no_streak">No streak yet</string>
+    <string name="home_all_done">All done</string>
+    <string name="home_next">NEXT</string>
+    <string name="home_no_reminder">No active reminder</string>
+    <string name="home_pending">Awaiting confirmation</string>
+    <string name="home_low_stock">Running low</string>
+    <string name="home_menu">Menu</string>
+    <string name="menu_supplements">My supplements</string>
+    <string name="menu_supplements_sub">Stock cards</string>
+    <string name="menu_reminders">Reminders</string>
+    <string name="menu_reminders_sub">Times and days</string>
+    <string name="menu_history">History</string>
+    <string name="menu_history_sub">Taken / missed</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_settings_sub">Alarms, battery, permissions</string>
+    <string name="home_hint">Add a supplement with its stock first, then create a reminder.</string>
+    <string name="stock_out">Out of stock — buy more</string>
+    <string name="stock_left">%s left</string>
+
+    <!-- ============ Supplements ============ -->
+    <string name="supplements_title">My supplements</string>
+    <string name="supplement_new">New supplement</string>
+    <string name="supplement_new_sub">Create a stock card</string>
+    <string name="supplements_empty">No supplements yet.\nAdd a stock card first, set up the reminder after.</string>
+    <string name="supplement_passive">passive</string>
+    <string name="pill_out">Out</string>
+    <string name="pill_low">Low</string>
+    <string name="pill_ok">Enough</string>
+    <string name="pill_passive">Passive</string>
+    <string name="section_adjust_stock">Adjust stock</string>
+    <string name="stock_on_hand">On hand (%s)</string>
+    <string name="bought_more">I bought more</string>
+    <string name="bought_more_sub">Add %s</string>
+    <string name="threshold_hint">Alert threshold: %s.\nYou get a restock alert at this level.</string>
+    <string name="section_recent">Recent activity</string>
+    <string name="no_records">No records yet.</string>
+    <string name="section_card">Card</string>
+    <string name="supplement_edit_sub">Name, unit, threshold</string>
+    <string name="supplement_delete_sub">Also removed from reminders</string>
+
+    <string name="supplement_edit_title">Edit supplement</string>
+    <string name="supplement_new_title">New supplement</string>
+    <string name="name_placeholder">Enter a name…</string>
+    <string name="name_hint">Tap and type</string>
+    <string name="name_field">Supplement name</string>
+    <string name="strength_placeholder">Strength (optional)</string>
+    <string name="strength_hint">e.g. 1000 IU, 500 mg</string>
+    <string name="strength_field">Strength</string>
+    <string name="unit_row">Unit: %s</string>
+    <string name="unit_row_sub">Tap to change</string>
+    <string name="section_stock">Stock</string>
+    <string name="field_on_hand">Amount on hand</string>
+    <string name="field_threshold">Alert threshold (last N)</string>
+    <string name="field_box_size">One box = how many %s</string>
+    <string name="section_color">Colour</string>
+    <string name="status_row_active">Status: active</string>
+    <string name="status_row_passive">Status: passive</string>
+    <string name="status_row_sub">Passive items are hidden from reminders</string>
+    <string name="supplement_save_hint">After saving, set a time under Reminders.</string>
+    <string name="untitled">Untitled</string>
+
+    <!-- ============ Reminders ============ -->
+    <string name="reminders_title">Reminders</string>
+    <string name="reminder_new">New reminder</string>
+    <string name="reminder_new_sub">Pick a time and supplements</string>
+    <string name="reminders_empty">No reminders yet.\nOne reminder can hold several supplements;\nyou confirm each of them separately.</string>
+    <string name="reminders_hint">Medications that share a time arrive in one notification.</string>
+    <string name="reminder_count">%d medication(s)</string>
+    <string name="reminder_edit_title">Edit reminder</string>
+    <string name="reminder_new_title">New reminder</string>
+    <string name="field_hour">Hour</string>
+    <string name="field_minute">Minute (by 5)</string>
+    <string name="section_days">Days</string>
+    <string name="preset_everyday">Daily</string>
+    <string name="preset_weekdays">Mon–Fri</string>
+    <string name="preset_weekend">Sat–Sun</string>
+    <string name="section_pick">Pick medications</string>
+    <string name="add_supplement_first">Add a supplement first</string>
+    <string name="add_supplement_first_sub">A stock card is required</string>
+    <string name="amount_of">%s amount</string>
+    <string name="stock_of">stock %s</string>
+    <string name="multi_hint">%d medications arrive in one notification; you confirm each separately.</string>
+    <string name="single_hint">You can group everything you take at this time here.</string>
+    <string name="section_snooze">Snooze</string>
+    <string name="field_snooze">Snooze duration</string>
+    <string name="field_jitter">Random spread (anti-collision)</string>
+    <string name="field_max_snooze">Max snoozes</string>
+    <string name="minutes_short">%d min</string>
+    <string name="minutes_plusminus">± %d min</string>
+    <string name="times_count">%d×</string>
+    <string name="snooze_hint">Snooze two doses and confirm one — the snoozed ones land on different minutes instead of burying each other.</string>
+    <string name="section_other">Other</string>
+    <string name="label_placeholder">Add a label (optional)</string>
+    <string name="label_hint">e.g. After breakfast</string>
+    <string name="label_field">Reminder name</string>
+    <string name="reminder_on">Status: on</string>
+    <string name="reminder_off">Status: off</string>
+    <string name="reminder_status_sub">No alarm is scheduled while off</string>
+    <string name="next_preview">Next: %1$s %2$s (%3$s)</string>
+    <string name="reminder_disabled">Off</string>
+    <string name="need_supplement">Pick at least one medication</string>
+    <string name="reminder_fallback">Reminder</string>
+    <string name="reminder_copy">Duplicate</string>
+    <string name="reminder_copy_sub">New reminder with the same setup</string>
+    <string name="copy_suffix">(copy)</string>
+
+    <!-- ============ Dose confirmation ============ -->
+    <string name="dose_time">Dose time</string>
+    <string name="dose_all_done">All done!</string>
+    <string name="dose_processed">Handled</string>
+    <string name="snoozed_times">snoozed %d×</string>
+
+    <!-- ============ History ============ -->
+    <string name="history_title">History</string>
+    <string name="history_empty">No records yet.\nYour first confirmed dose shows up here.</string>
+    <string name="history_total">%d total</string>
+    <string name="history_window">Showing the last 7 days.</string>
+
+    <!-- ============ Settings ============ -->
+    <string name="settings_title">Settings</string>
+    <string name="section_reliability">Reliability</string>
+    <string name="perm_exact">Exact alarm permission</string>
+    <string name="perm_granted">Granted</string>
+    <string name="perm_missing">Not granted — tap</string>
+    <string name="perm_battery">Battery optimisation</string>
+    <string name="perm_battery_ok">Exempted</string>
+    <string name="perm_battery_no">NOT exempt — tap</string>
+    <string name="perm_fsi">Full-screen alert permission</string>
+    <string name="perm_notifications">Notification settings</string>
+    <string name="perm_notifications_sub">Channel and vibration</string>
+    <string name="oem_hint">Aggressive vendor skins (Xiaomi HyperOS and friends) throttle background work. Without the battery exemption, overnight alarms can be missed.</string>
+    <string name="oem_hint_ok">On Xiaomi HyperOS also set Security → Battery → Apps → No restrictions.</string>
+    <string name="settings_open_failed">This screen is not available on this watch. Open it manually: system Settings → Apps → DoseWear → Battery.</string>
+
+    <string name="section_alarm">Alarm behaviour</string>
+    <string name="high_prio_on">High priority: on</string>
+    <string name="high_prio_off">High priority: off</string>
+    <string name="high_prio_sub_on">setAlarmClock — exempt from Doze</string>
+    <string name="high_prio_sub_off">setExactAndAllowWhileIdle</string>
+    <string name="fullscreen_on">Full-screen alert: on</string>
+    <string name="fullscreen_off">Full-screen alert: off</string>
+    <string name="fullscreen_sub">Wakes the screen, opens the confirm sheet</string>
+    <string name="field_alert_duration">Vibrate until</string>
+    <string name="seconds_short">%d s</string>
+    <string name="alert_duration_hint">The watch keeps vibrating for this long, or until you confirm or snooze.</string>
+    <string name="field_nag_interval">Repeat every</string>
+    <string name="field_nag_count">Repeat count</string>
+    <string name="nag_hint">After the last repeat the dose is recorded as missed.</string>
+
+    <string name="section_defaults">New reminder defaults</string>
+    <string name="section_maintenance">Maintenance</string>
+    <string name="reschedule">Rebuild alarms</string>
+    <string name="reschedule_sub">Re-arms the whole chain</string>
+    <string name="reschedule_done">Alarms rebuilt.</string>
+    <string name="version">Version %s</string>
+
+    <!-- ============ Notifications ============ -->
+    <string name="chan_dose">Dose reminder</string>
+    <string name="chan_dose_desc">Alerts when it is time to take something</string>
+    <string name="chan_stock">Stock alert</string>
+    <string name="chan_stock_desc">Alerts when a supplement is running low</string>
+    <string name="notif_title_multi">%1$d medications • %2$s</string>
+    <string name="notif_title_single">%1$s • %2$s</string>
+    <string name="notif_urgent_1">❗ Reminder\n</string>
+    <string name="notif_urgent_2">‼️ Still not confirmed\n</string>
+    <string name="notif_low_title">%s is running low</string>
+    <string name="notif_low_empty">Out of stock!</string>
+    <string name="notif_low_left">Only %s left</string>
+    <string name="notif_low_body">%1$s\nIf you bought a new box, confirm it and the stock goes up by %2$s.</string>
+    <string name="notif_bought">Bought (+%s)</string>
+    <string name="notif_later">Later</string>
+
+    <!-- ============ Tile / complication ============ -->
+    <string name="tile_pending_many">%d doses waiting</string>
+    <string name="tile_pending_sub">Awaiting confirmation • %s</string>
+    <string name="tile_none">No reminders</string>
+    <string name="tile_none_sub">Add one in the app</string>
+    <string name="tile_today">Today %1$d/%2$d</string>
+    <string name="tile_today_none">No doses today</string>
+    <string name="comp_title">Dose</string>
+    <string name="comp_pending">Waiting</string>
+    <string name="comp_none">No dose</string>
+    <string name="comp_desc">DoseWear: next dose</string>
+</resources>
