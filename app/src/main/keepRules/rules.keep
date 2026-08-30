@@ -1,12 +1,37 @@
-# Add project specific R8 rules here.
-# AGP will combine all keep rule files in src/main/keepRules to pass to R8
+# R8 keep kurallari.
+# AGP, src/main/keepRules altindaki tum dosyalari birlestirip R8'e veriyor.
 #
-# For more details, see
-#   https://d.android.com/r/tools/r8/keep-rules
+# Manifest'te tanimli bilesenler (Activity, Service, BroadcastReceiver) R8
+# tarafindan zaten otomatik korunuyor. Buradakiler yansimayla (reflection)
+# erisilen ya da uretilen kodun isim uzerinden buldugu seyler icin.
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# ---------------------------------------------------------------- Room
+# Room, AppDatabase_Impl sinifini "<sinif adi>_Impl" seklinde yansimayla buluyor.
+-keep class * extends androidx.room.RoomDatabase { <init>(); }
+# Entity alan adlari uretilen kodda ve SQL'de isimle esleniyor.
+-keep class com.example.dosewear.data.** { *; }
+-dontwarn androidx.room.paging.**
+
+# ---------------------------------------------------------------- Enum
+# DoseStatus.valueOf(...) ile durum metinden okunuyor.
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+# ---------------------------------------------------------------- Wear yuzeyleri
+# Tile ve complication servisleri sistem tarafindan disaridan baglaniyor.
+-keep class com.example.dosewear.tile.** { *; }
+-keep class com.example.dosewear.complication.** { *; }
+# Alarm ve bildirim receiver'lari PendingIntent icinde sinif adiyla tasiniyor.
+-keep class com.example.dosewear.alarm.** { *; }
+
+# ---------------------------------------------------------------- Uyarilar
+# Guava'nin sunucu tarafi/opsiyonel bagimliliklari Android'de yok.
+-dontwarn com.google.common.**
+-dontwarn javax.annotation.**
+-dontwarn javax.lang.model.**
+-dontwarn java.lang.ClassValue
+-dontwarn sun.misc.Unsafe
+-dontwarn org.checkerframework.**
+-dontwarn com.google.errorprone.**

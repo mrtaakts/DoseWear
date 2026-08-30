@@ -46,8 +46,10 @@ android {
             if (keystorePropsFile.exists()) {
                 signingConfig = signingConfigs.getByName("release")
             }
+            // R8: kullanilmayan kodu kirp + optimize et.
+            // Keep kurallari app/src/main/keepRules/rules.keep icinde.
             optimization {
-                enable = false
+                enable = true
             }
         }
     }
