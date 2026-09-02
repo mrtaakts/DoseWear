@@ -56,6 +56,11 @@ class Prefs(context: Context) {
         get() = sp.getInt(K_ALERT_SEC, 60)
         set(v) = sp.edit().putInt(K_ALERT_SEC, v.coerceIn(15, 180)).apply()
 
+    /** Alarm caldiginda sistemin varsayilan alarm sesi calsin mi. */
+    var soundEnabled: Boolean
+        get() = sp.getBoolean(K_SOUND, true)
+        set(v) = sp.edit().putBoolean(K_SOUND, v).apply()
+
     /** Tam ekran doz onay ekrani acilsin mi. */
     var fullScreenAlarm: Boolean
         get() = sp.getBoolean(K_FULLSCREEN, true)
@@ -98,6 +103,7 @@ class Prefs(context: Context) {
         private const val K_MAX_NAGS = "max_nags"
         private const val K_FULLSCREEN = "full_screen_alarm"
         private const val K_ALERT_SEC = "alert_duration_sec"
+        private const val K_SOUND = "alarm_sound"
         private const val K_LAST_SCHED = "diag_last_scheduled"
         private const val K_LAST_FIRED = "diag_last_fired"
         private const val K_LAST_TAG = "diag_last_tag"

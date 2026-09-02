@@ -1,6 +1,7 @@
 package com.example.dosewear.presentation
 
 import android.content.Context
+import com.example.dosewear.alarm.AlarmAlertService
 import com.example.dosewear.alarm.AlarmScheduler
 import com.example.dosewear.data.DoseLog
 import com.example.dosewear.data.DoseRepository
@@ -14,7 +15,7 @@ import com.example.dosewear.util.Surfaces
 object DoseUiActions {
 
     suspend fun take(context: Context, log: DoseLog) {
-        DoseNotifier.stopAlarmVibration(context)
+        AlarmAlertService.stop(context)
         val repo = DoseRepository.get(context)
         val low = repo.markTaken(log.id)
         low?.let { DoseNotifier.showLowStock(context, it) }
@@ -24,7 +25,7 @@ object DoseUiActions {
     }
 
     suspend fun snooze(context: Context, log: DoseLog) {
-        DoseNotifier.stopAlarmVibration(context)
+        AlarmAlertService.stop(context)
         val repo = DoseRepository.get(context)
         val next = repo.snooze(log.id)
         if (next != null) AlarmScheduler.scheduleSnooze(context, log.id, next)
@@ -33,7 +34,7 @@ object DoseUiActions {
     }
 
     suspend fun skip(context: Context, log: DoseLog) {
-        DoseNotifier.stopAlarmVibration(context)
+        AlarmAlertService.stop(context)
         val repo = DoseRepository.get(context)
         repo.markSkipped(log.id)
         AlarmScheduler.cancelSnooze(context, log.id)

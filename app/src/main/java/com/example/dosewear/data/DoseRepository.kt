@@ -250,20 +250,29 @@ class DoseRepository private constructor(context: Context) {
     /*  Sirada ne var?                                                    */
     /* ----------------------------------------------------------------- */
 
-    suspend fun nextUpcoming(): UpcomingDose? {
+    suspend fun nextUpcoming(): UpcomingDose? = upcoming(1).firstOrNull()
+
+    /**
+     * Siradaki [limit] doz, zamana gore sirali.
+     * Tek hatirlatici varsa onun bir sonraki iki tekrarini da dondurebilir;
+     * Tile iki satir gosterebilsin diye her hatirlatici icin iki occurrence bakiyoruz.
+     */
+    suspend fun upcoming(limit: Int = 2): List<UpcomingDose> {
         val now = LocalDateTime.now()
-        return reminders.activeWithItems()
-            .mapNotNull { rwi ->
-                val at = rwi.reminder.nextTriggerAt(now)
-                if (at <= 0) null
-                else UpcomingDose(
-                    reminderId = rwi.reminder.id,
-                    triggerAt = at,
-                    title = rwi.title(),
-                    names = rwi.items.mapNotNull { it.supplement?.name }
-                )
-            }
-            .minByOrNull { it.triggerAt }
+        val out = mutableListOf<UpcomingDose>()
+        for (rwi in reminders.activeWithItems()) {
+            val names = rwi.items.mapNotNull { it.supplement?.name }
+            val first = rwi.reminder.nextTriggerAt(now)
+            if (first <= 0) continue
+            out += UpcomingDose(rwi.reminder.id, first, rwi.title(), names)
+
+            val afterFirst = LocalDateTime.ofInstant(
+                java.time.Instant.ofEpochMilli(first + 60_000L), ZoneId.systemDefault()
+            )
+            val second = rwi.reminder.nextTriggerAt(afterFirst)
+            if (second > 0) out += UpcomingDose(rwi.reminder.id, second, rwi.title(), names)
+        }
+        return out.sortedBy { it.triggerAt }.take(limit)
     }
 
     /** Bugun icin uyum orani (alinan / planlanan). */

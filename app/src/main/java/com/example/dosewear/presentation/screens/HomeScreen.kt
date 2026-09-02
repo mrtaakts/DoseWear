@@ -125,6 +125,18 @@ fun HomeScreen(
         }
     }
 
+    // Bugun kacirilan dozlar: gecmise girmeden buradan da onaylanabilsin.
+    val missedUi = remember(today) {
+        today.filter { it.status == DoseStatus.MISSED }.map { log ->
+            OpenDoseUi(
+                log = log,
+                name = log.supplementName,
+                sub = "${log.scheduledText()} • ${Texts.amountText(ctx, log)}",
+                snoozePill = null
+            )
+        }
+    }
+
     val lowUi = remember(lowStock) {
         lowStock.map { s ->
             LowStockUi(
@@ -160,6 +172,17 @@ fun HomeScreen(
                         ui = ui,
                         onTake = { scope.launch { DoseUiActions.take(ctx, ui.log) } },
                         onSnooze = { scope.launch { DoseUiActions.snooze(ctx, ui.log) } }
+                    )
+                }
+            }
+
+            if (missedUi.isNotEmpty()) {
+                item { SectionTitle(stringResource(R.string.home_missed), Coral) }
+                items(missedUi) { ui ->
+                    MissedDoseRow(
+                        ui = ui,
+                        onTakeNow = { scope.launch { DoseUiActions.take(ctx, ui.log) } },
+                        onSkip = { scope.launch { DoseUiActions.skip(ctx, ui.log) } }
                     )
                 }
             }
@@ -372,6 +395,52 @@ private fun OpenDoseRow(ui: OpenDoseUi, onTake: () -> Unit, onSnooze: () -> Unit
                 36.dp,
                 12,
                 onSnooze
+            )
+        }
+    }
+}
+
+/**
+ * Kacirilmis doz satiri. "Simdi aldim" dedigin an alim saati O AN olarak
+ * yazilir ve stok o anda duser.
+ */
+@Composable
+private fun MissedDoseRow(ui: OpenDoseUi, onTakeNow: () -> Unit, onSkip: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp)
+            .card(Slate, 20.dp)
+            .padding(horizontal = 10.dp, vertical = 8.dp)
+    ) {
+        Text(
+            ui.name,
+            color = Color(0xFFF2F6FF),
+            fontSize = 13.sp,
+            fontWeight = FontWeight.SemiBold,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Text(ui.sub, color = Steel, fontSize = 10.sp, maxLines = 1)
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            ActionButton(
+                text = "✓ " + stringResource(R.string.confirm_now),
+                color = Mint,
+                modifier = Modifier.fillMaxWidth(0.62f),
+                height = 36.dp,
+                fontSize = 11,
+                onClick = onTakeNow
+            )
+            ActionButton(
+                text = "⤼ " + stringResource(R.string.action_skip),
+                color = Coral,
+                modifier = Modifier.fillMaxWidth(1f),
+                height = 36.dp,
+                fontSize = 11,
+                onClick = onSkip
             )
         }
     }

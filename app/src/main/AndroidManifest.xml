@@ -14,6 +14,12 @@
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <uses-permission android:name="android.permission.TURN_SCREEN_ON" />
+    <!-- OEM katmani arka plandan aktivite baslatmayi engellerse onay ekraninin
+         yine de one gelebilmesi icin. Kullanici Ayarlar'dan verir, zorunlu degil. -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- Alarm caldigi surece yasayan ses/titresim servisi icin -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission
         android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
         tools:ignore="BatteryLife" />
@@ -54,6 +60,14 @@
             android:name=".alarm.DoseAlarmReceiver"
             android:enabled="true"
             android:exported="false" />
+
+        <!-- Alarm caldigi surece sesi ve titresimi tasiyan servis.
+             Foreground bildirimi olarak dozun kendi bildirimini kullanir,
+             bu yuzden ekranda ikinci bir bildirim cikmaz. -->
+        <service
+            android:name=".alarm.AlarmAlertService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
 
         <!-- Bildirim butonlari: Aldim / Ertele / Atla / Satin aldim -->
         <receiver

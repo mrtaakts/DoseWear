@@ -372,6 +372,51 @@ No dependency injection framework, no network stack, no analytics.
 
 ---
 
+## Changelog
+
+### 1.2 — `versionCode 3`
+
+- **Tile lists the next five doses** instead of two.
+- **Alarm sound reworked**: instead of a continuous ringtone, the watch's notification
+  tone now repeats every 2 seconds, in sync with the vibration pattern. Audible enough
+  to wake you, not a siren.
+
+### 1.1 — `versionCode 2`
+
+- **Alarm sound added.** A foreground `AlarmAlertService` now owns the sound and the
+  vibration for the length of the alert. Previously the vibration was fired from a
+  `BroadcastReceiver` that died within milliseconds, so a `MediaPlayer` could never
+  survive — which is why no sound ever played.
+- **Confirming from anywhere reliably silences the alert.** Notification action, in-app
+  buttons and the full-screen sheet all route through one stop path.
+- **The full-screen sheet no longer silences the alarm when it opens** — only a real
+  action (take / snooze / skip) does. Escalation repeats no longer force the screen open.
+- **Retroactive confirmation.** Tap an unconfirmed dose in History to mark it taken now:
+  the taken time is the current time and the stock decrements at that moment.
+- **"Missed today"** section on the home screen, with the same one-tap confirmation.
+- **Tile**: fixed vertical centring (the inner column was expanding and pinning content
+  to the top) and it now shows the next two doses.
+- **Settings**: "Alarm sound" on/off.
+
+### 1.0 — `versionCode 1`
+
+Initial release.
+
+- Standalone Wear OS medication and supplement tracker; Room/SQLite on the watch, no
+  network permission, no account.
+- Exact alarms via `setAlarmClock`, rescheduled after reboot, time change and app update.
+- Multiple medications per reminder, each confirmed separately; snooze with per-dose
+  anti-collision jitter.
+- Full-screen confirmation with escalating nudges; missed doses recorded rather than
+  nagged forever.
+- Per-supplement stock cards with a low-stock restock prompt.
+- Reminder duplication, two-step delete confirmation.
+- Tile and watch-face complication for the next dose.
+- UI follows the watch language (Turkish / English).
+- R8 enabled: 29 MB → 2.7 MB.
+
+---
+
 ## Roadmap
 
 - [ ] Backup / restore of the database

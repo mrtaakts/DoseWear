@@ -3,10 +3,12 @@ package com.example.dosewear.alarm
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.PowerManager
 import android.util.Log
 import com.example.dosewear.data.DoseRepository
 import com.example.dosewear.notif.DoseNotifier
+import com.example.dosewear.presentation.AlarmActivity
 import com.example.dosewear.util.Surfaces
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -74,13 +76,21 @@ class DoseAlarmReceiver : BroadcastReceiver() {
                 }
 
                 val groupKey = created.first().groupKey
-                DoseNotifier.showDoseNotification(
+                val notification = DoseNotifier.showDoseNotification(
                     context = context,
                     notifKey = groupKey,
                     pending = created,
                     nagLevel = 0,
                     fullScreen = prefs.fullScreenAlarm
                 )
+                notification?.let {
+                    AlarmAlertService.start(
+                        context, DoseNotifier.doseNotificationId(groupKey), it
+                    )
+                }
+                if (prefs.fullScreenAlarm) {
+                    openConfirmScreen(context, groupKey, created.map { it.id }.toLongArray())
+                }
                 AlarmScheduler.scheduleNag(
                     context, groupKey, created.map { it.id }.toLongArray(),
                     prefs.nagIntervalMinutes
@@ -98,13 +108,21 @@ class DoseAlarmReceiver : BroadcastReceiver() {
                 )
 
                 val notifKey = DoseNotifier.SNOOZE_KEY_OFFSET + doseId
-                DoseNotifier.showDoseNotification(
+                val notification = DoseNotifier.showDoseNotification(
                     context = context,
                     notifKey = notifKey,
                     pending = listOf(log),
                     nagLevel = 0,
                     fullScreen = prefs.fullScreenAlarm
                 )
+                notification?.let {
+                    AlarmAlertService.start(
+                        context, DoseNotifier.doseNotificationId(notifKey), it
+                    )
+                }
+                if (prefs.fullScreenAlarm) {
+                    openConfirmScreen(context, notifKey, longArrayOf(doseId))
+                }
                 AlarmScheduler.scheduleNag(
                     context, notifKey, longArrayOf(doseId), prefs.nagIntervalMinutes
                 )
@@ -118,7 +136,7 @@ class DoseAlarmReceiver : BroadcastReceiver() {
                     ?: return
                 val stillPending = repo.pendingOf(ids)
                 if (stillPending.isEmpty()) {
-                    DoseNotifier.stopAlarmVibration(context)
+                    AlarmAlertService.stop(context)
                     DoseNotifier.cancelDose(context, notifKey)
                     return
                 }
@@ -129,26 +147,61 @@ class DoseAlarmReceiver : BroadcastReceiver() {
                 if (nag > prefs.maxNags) {
                     // Sabir bitti: kacirildi olarak isaretle, bildirimi kaldir.
                     stillPending.forEach { repo.markMissed(it.id) }
-                    DoseNotifier.stopAlarmVibration(context)
+                    AlarmAlertService.stop(context)
                     DoseNotifier.cancelDose(context, notifKey)
                     Surfaces.refreshAll(context)
                     return
                 }
 
-                DoseNotifier.showDoseNotification(
+                // Israrda tam ekran ACILMIYOR: ekran zorla one gelmesin,
+                // sadece ses + titresim + kalici bildirim.
+                val notification = DoseNotifier.showDoseNotification(
                     context = context,
                     notifKey = notifKey,
                     pending = stillPending,
                     nagLevel = nag,
-                    // Israrda tam ekran acmiyoruz: sadece titresim + kalici bildirim.
                     fullScreen = false
                 )
+                notification?.let {
+                    AlarmAlertService.start(
+                        context, DoseNotifier.doseNotificationId(notifKey), it
+                    )
+                }
                 AlarmScheduler.scheduleNag(
                     context, notifKey, stillPending.map { it.id }.toLongArray(),
                     prefs.nagIntervalMinutes
                 )
             }
         }
+    }
+
+    /**
+     * Onay ekranini ZORLA one getirir.
+     *
+     * setFullScreenIntent tek basina yetmiyor: Android o intent'i yalnizca cihaz
+     * kilitliyken / ekran kapaliyken aktiviteye cevirir, saat acik ve kullanimdayken
+     * bilerek sadece heads-up bildirim gosterir. Bu yuzden aktiviteyi ayrica
+     * dogrudan baslatiyoruz.
+     *
+     * Arka plandan aktivite baslatma normalde engelli; kesin alarm (setAlarmClock /
+     * setExact*) tetiklenen uygulama gecici izin listesine alindigi icin burada
+     * calisiyor. OEM katmani yine de engellerse "uzerinde gosterme" izni devreye
+     * girer (Ayarlar ekraninda), o da yoksa tam ekran bildirimi yedek kalir.
+     */
+    private fun openConfirmScreen(context: Context, notifKey: Long, doseIds: LongArray) {
+        val intent = Intent(context, AlarmActivity::class.java).apply {
+            addFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_SINGLE_TOP or
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                    Intent.FLAG_ACTIVITY_NO_USER_ACTION
+            )
+            data = Uri.parse("dosewear://alarm/$notifKey")
+            putExtra(AlarmActivity.EXTRA_NOTIF_KEY, notifKey)
+            putExtra(AlarmActivity.EXTRA_DOSE_IDS, doseIds)
+        }
+        runCatching { context.startActivity(intent) }
+            .onFailure { Log.w(TAG, "Onay ekrani acilamadi: ${it.message}") }
     }
 
     companion object {

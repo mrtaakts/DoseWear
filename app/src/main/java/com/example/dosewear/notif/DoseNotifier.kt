@@ -45,9 +45,12 @@ object DoseNotifier {
     private const val ID_LOW_STOCK_BASE = 20_000
     private const val ID_DOSE_BASE = 1_000
 
-    /** Bir alarm dongusu: guclu-guclu-uzun. ~2.8 sn. */
-    private val ALARM_CYCLE_TIMINGS = longArrayOf(0, 500, 250, 500, 250, 900, 400)
-    private val ALARM_CYCLE_AMPS = intArrayOf(0, 255, 0, 255, 0, 255, 0)
+    /**
+     * Bir alarm dongusu tam 2 saniye: cift titresim + sessizlik.
+     * Ses de 2 saniyede bir tekrarladigi icin ikisi ust uste biniyor.
+     */
+    private val ALARM_CYCLE_TIMINGS = longArrayOf(0, 400, 200, 400, 1000)
+    private val ALARM_CYCLE_AMPS = intArrayOf(0, 255, 0, 255, 0)
     private val STOCK_PATTERN = longArrayOf(0, 200, 150, 200)
 
     /* ------------------------------------------------------------------ */
@@ -217,20 +220,19 @@ object DoseNotifier {
         )
     }
 
-    fun showDoseNotification(
+    /**
+     * Bildirimi kurar ama GOSTERMEZ. AlarmAlertService bunu foreground
+     * bildirimi olarak kullaniyor; boylece tek bir bildirim hem alarmi
+     * hem servisi temsil ediyor.
+     */
+    fun buildDoseNotification(
         context: Context,
         notifKey: Long,
         pending: List<DoseLog>,
         nagLevel: Int = 0,
         fullScreen: Boolean = true,
-        /** false -> bildirim sessizce guncellenir, titresim baslatilmaz. */
         alert: Boolean = true
-    ) {
-        if (pending.isEmpty()) {
-            cancelDose(context, notifKey)
-            return
-        }
-        val nm = NotificationManagerCompat.from(context)
+    ): Notification {
         val id = doseNotificationId(notifKey)
         val rcBase = id * 8
         val doseIds = pending.map { it.id }.toLongArray()
@@ -308,13 +310,35 @@ object DoseNotifier {
             )
         }
 
+        return builder.build()
+    }
+
+    /**
+     * Bildirimi olusturup gosterir ve olusturulan bildirimi dondurur
+     * (cagiran taraf ayni nesneyi servise foreground bildirimi olarak verebilsin diye).
+     * Ses/titresim burada BASLATILMAZ; onu AlarmAlertService yapar.
+     */
+    fun showDoseNotification(
+        context: Context,
+        notifKey: Long,
+        pending: List<DoseLog>,
+        nagLevel: Int = 0,
+        fullScreen: Boolean = true,
+        /** false -> bildirim sessizce guncellenir (tekrar dikkat cekmez). */
+        alert: Boolean = true
+    ): Notification? {
+        if (pending.isEmpty()) {
+            cancelDose(context, notifKey)
+            return null
+        }
+        val notification =
+            buildDoseNotification(context, notifKey, pending, nagLevel, fullScreen, alert)
         try {
-            nm.notify(id, builder.build())
+            NotificationManagerCompat.from(context).notify(doseNotificationId(notifKey), notification)
         } catch (_: SecurityException) {
             // POST_NOTIFICATIONS verilmemis
         }
-
-        if (alert) startAlarmVibration(context)
+        return notification
     }
 
     fun cancelDose(context: Context, notifKey: Long) {

@@ -26,8 +26,8 @@ android {
         targetSdk = 37
         // Her yeni kurulumda versionCode'u ARTTIR; ayni imzayla
         // "adb install -r" verini silmeden gunceller.
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "1.2"
     }
 
     signingConfigs {

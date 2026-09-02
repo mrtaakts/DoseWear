@@ -43,8 +43,8 @@ class DoseActionReceiver : BroadcastReceiver() {
         val supplementId = intent.getLongExtra(EXTRA_SUPPLEMENT_ID, 0L)
         val doseIds = intent.getLongArrayExtra(EXTRA_DOSE_IDS)?.toList() ?: emptyList()
 
-        // Kullanici bir sey yapti -> alarm titresimi hemen sussun.
-        DoseNotifier.stopAlarmVibration(context)
+        // Kullanici bir sey yapti -> ses ve titresim hemen sussun.
+        AlarmAlertService.stop(context)
 
         when (intent.action) {
 

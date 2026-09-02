@@ -375,6 +375,52 @@ Dependency injection kütüphanesi yok, ağ katmanı yok, analitik yok.
 
 ---
 
+## Sürüm geçmişi
+
+### 1.2 — `versionCode 3`
+
+- **Tile artık sıradaki beş dozu** listeliyor (önceden iki).
+- **Alarm sesi değişti**: kesintisiz çalan bir melodi yerine saatin bildirim sesi
+  2 saniyede bir tekrarlıyor, titreşim ritmiyle senkron. Uyandıracak kadar belirgin,
+  siren gibi değil.
+
+### 1.1 — `versionCode 2`
+
+- **Alarm sesi eklendi.** Artık ses ve titreşimin sahibi, alarm çaldığı sürece yaşayan
+  bir foreground servis (`AlarmAlertService`). Önceden titreşim milisaniyeler içinde ölen
+  bir `BroadcastReceiver`'dan tetikleniyordu ve içinde bir `MediaPlayer` yaşayamıyordu —
+  sesin hiç çalmamasının sebebi buydu.
+- **Nereden onaylarsan onayla alarm susuyor.** Bildirim butonu, uygulama içi butonlar ve
+  tam ekran onay sayfası tek bir durdurma noktasından geçiyor.
+- **Tam ekran sayfa açılınca artık alarmı susturmuyor** — yalnızca gerçek bir işlem
+  (aldım / ertele / atla) susturuyor. Israr tekrarlarında ekran zorla öne getirilmiyor.
+- **Geçmişten sonradan onaylama.** Geçmişte onaylanmamış bir doza dokunup "Şimdi aldım"
+  diyebilirsin: alım saati o an olur ve stok o anda düşer.
+- Ana ekrana **"Bugün kaçırılan"** bölümü, aynı tek dokunuşluk onayla.
+- **Tile**: dikey ortalama düzeltildi (iç sütun tüm alanı kaplayıp içeriği yukarı
+  yapıştırıyordu) ve sıradaki iki doz gösterilmeye başlandı.
+- **Ayarlar**: "Alarm sesi" aç/kapa.
+
+### 1.0 — `versionCode 1`
+
+İlk sürüm.
+
+- Telefon gerektirmeyen Wear OS ilaç ve takviye takipçisi; saatte Room/SQLite, ağ izni
+  yok, hesap yok.
+- `setAlarmClock` ile kesin alarmlar; yeniden başlatma, saat değişimi ve uygulama
+  güncellemesi sonrası yeniden kuruluyor.
+- Bir hatırlatıcıda birden fazla ilaç, her biri ayrı onaylanıyor; doz başına rastgele
+  sapmalı erteleme.
+- Tam ekran onay ve artan ısrar; onaylanmayan doz sonsuza kadar dırdır etmek yerine
+  "kaçırıldı" olarak kaydediliyor.
+- Takviye başına stok kartı ve azalınca satın alma uyarısı.
+- Hatırlatıcı kopyalama, iki adımlı silme onayı.
+- Sıradaki doz için tile ve saat yüzü complication'ı.
+- Arayüz saatin dilini takip ediyor (Türkçe / İngilizce).
+- R8 açıldı: 29 MB → 2.7 MB.
+
+---
+
 ## Yol haritası
 
 - [ ] Veritabanı yedekleme / geri yükleme

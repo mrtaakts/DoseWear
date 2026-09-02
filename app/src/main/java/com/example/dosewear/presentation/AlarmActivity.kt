@@ -38,7 +38,6 @@ import com.example.dosewear.data.DoseLog
 import com.example.dosewear.data.DoseRepository
 import com.example.dosewear.data.DoseStatus
 import com.example.dosewear.data.Fmt
-import com.example.dosewear.notif.DoseNotifier
 import com.example.dosewear.presentation.theme.Amber
 import com.example.dosewear.presentation.theme.Coral
 import com.example.dosewear.presentation.theme.DoseWearTheme
@@ -71,15 +70,6 @@ class AlarmActivity : ComponentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
         render(intent)
-    }
-
-    /**
-     * Kullanici ekrana bakiyor -> titresim sussun. Bildirim kalici oldugu icin
-     * ekrandan cikilsa bile doz kaybolmaz, israr alarmi devrede kalir.
-     */
-    override fun onResume() {
-        super.onResume()
-        DoseNotifier.stopAlarmVibration(this)
     }
 
     private fun render(intent: Intent?) {

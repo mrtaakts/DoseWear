@@ -62,6 +62,7 @@
     <string name="action_take_all_short">Take all</string>
     <string name="action_snooze_all">Snooze all</string>
     <string name="action_confirm_each">Confirm each</string>
+    <string name="confirm_now">Taken now</string>
 
     <!-- ============ Home ============ -->
     <string name="home_today">TODAY</string>
@@ -73,6 +74,7 @@
     <string name="home_no_reminder">No active reminder</string>
     <string name="home_pending">Awaiting confirmation</string>
     <string name="home_low_stock">Running low</string>
+    <string name="home_missed">Missed today</string>
     <string name="home_menu">Menu</string>
     <string name="menu_supplements">My supplements</string>
     <string name="menu_supplements_sub">Stock cards</string>
@@ -184,6 +186,7 @@
     <string name="history_empty">No records yet.\nYour first confirmed dose shows up here.</string>
     <string name="history_total">%d total</string>
     <string name="history_window">Showing the last 7 days.</string>
+    <string name="history_tap_hint">Tap an unconfirmed dose to mark it taken now.</string>
 
     <!-- ============ Settings ============ -->
     <string name="settings_title">Settings</string>
@@ -195,6 +198,8 @@
     <string name="perm_battery_ok">Exempted</string>
     <string name="perm_battery_no">NOT exempt — tap</string>
     <string name="perm_fsi">Full-screen alert permission</string>
+    <string name="perm_overlay">Display over other apps</string>
+    <string name="perm_overlay_hint">Optional. Only needed if the confirmation screen does not come to the front while you are using the watch.</string>
     <string name="perm_notifications">Notification settings</string>
     <string name="perm_notifications_sub">Channel and vibration</string>
     <string name="oem_hint">Aggressive vendor skins (Xiaomi HyperOS and friends) throttle background work. Without the battery exemption, overnight alarms can be missed.</string>
@@ -209,6 +214,9 @@
     <string name="fullscreen_on">Full-screen alert: on</string>
     <string name="fullscreen_off">Full-screen alert: off</string>
     <string name="fullscreen_sub">Wakes the screen, opens the confirm sheet</string>
+    <string name="sound_on">Alarm sound: on</string>
+    <string name="sound_off">Alarm sound: off</string>
+    <string name="sound_sub">Notification tone, repeated every 2 s</string>
     <string name="field_alert_duration">Vibrate until</string>
     <string name="seconds_short">%d s</string>
     <string name="alert_duration_hint">The watch keeps vibrating for this long, or until you confirm or snooze.</string>

@@ -56,6 +56,7 @@ fun SettingsScreen() {
 
     var highPrio by remember { mutableStateOf(prefs.highPriorityAlarms) }
     var fullScreen by remember { mutableStateOf(prefs.fullScreenAlarm) }
+    var sound by remember { mutableStateOf(prefs.soundEnabled) }
     var alertSec by remember { mutableStateOf(prefs.alertDurationSeconds) }
     var nagInterval by remember { mutableStateOf(prefs.nagIntervalMinutes) }
     var maxNags by remember { mutableStateOf(prefs.maxNags) }
@@ -68,6 +69,7 @@ fun SettingsScreen() {
     val exactOk = remember(resumeTick) { AlarmScheduler.canScheduleExact(ctx) }
     val batteryOk = remember(resumeTick) { isIgnoringBatteryOptimizations(ctx) }
     val fsiOk = remember(resumeTick) { canUseFullScreenIntent(ctx) }
+    val overlayOk = remember(resumeTick) { canDrawOverlays(ctx) }
     val versionName = remember { appVersion(ctx) }
 
     val granted = stringResource(R.string.perm_granted)
@@ -126,6 +128,20 @@ fun SettingsScreen() {
             }
             item {
                 NavChip(
+                    emoji = if (overlayOk) "✅" else "▫️",
+                    label = stringResource(R.string.perm_overlay),
+                    secondary = if (overlayOk) granted else missing,
+                    // Zorunlu degil: amber, kirmizi degil.
+                    color = if (overlayOk) Mint else Amber,
+                    onClick = {
+                        message = if (openOverlaySettings(ctx)) null
+                        else ctx.getString(R.string.settings_open_failed)
+                    }
+                )
+            }
+            item { Hint(stringResource(R.string.perm_overlay_hint)) }
+            item {
+                NavChip(
                     emoji = "🔔",
                     label = stringResource(R.string.perm_notifications),
                     secondary = stringResource(R.string.perm_notifications_sub),
@@ -170,6 +186,18 @@ fun SettingsScreen() {
                         prefs.fullScreenAlarm = fullScreen
                     },
                     color = if (fullScreen) Mint else Steel
+                )
+            }
+            item {
+                PlainChip(
+                    label = if (sound) stringResource(R.string.sound_on)
+                    else stringResource(R.string.sound_off),
+                    secondary = stringResource(R.string.sound_sub),
+                    onClick = {
+                        sound = !sound
+                        prefs.soundEnabled = sound
+                    },
+                    color = if (sound) Mint else Steel
                 )
             }
             item {
@@ -287,6 +315,9 @@ private fun isIgnoringBatteryOptimizations(ctx: Context): Boolean {
     return runCatching { pm.isIgnoringBatteryOptimizations(ctx.packageName) }.getOrDefault(false)
 }
 
+private fun canDrawOverlays(ctx: Context): Boolean =
+    runCatching { Settings.canDrawOverlays(ctx) }.getOrDefault(false)
+
 private fun canUseFullScreenIntent(ctx: Context): Boolean {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) return true
     val nm = ctx.getSystemService(NotificationManager::class.java) ?: return true
@@ -338,6 +369,17 @@ private fun openFullScreenIntentSettings(ctx: Context): Boolean {
     list += Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(appUri(ctx))
     return tryStart(ctx, *list.toTypedArray())
 }
+
+/**
+ * "Uzerinde gosterme" izni: OEM katmani arka plandan aktivite baslatmayi
+ * engellediginde onay ekraninin yine de one gelmesini saglar.
+ */
+private fun openOverlaySettings(ctx: Context): Boolean = tryStart(
+    ctx,
+    Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).setData(appUri(ctx)),
+    Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION),
+    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(appUri(ctx))
+)
 
 private fun openNotificationSettings(ctx: Context): Boolean = tryStart(
     ctx,

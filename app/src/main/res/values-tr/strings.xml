@@ -62,6 +62,7 @@
     <string name="action_take_all_short">Hepsini aldım</string>
     <string name="action_snooze_all">Hepsini ertele</string>
     <string name="action_confirm_each">Tek tek onayla</string>
+    <string name="confirm_now">Şimdi aldım</string>
 
     <!-- ============ Ana ekran ============ -->
     <string name="home_today">BUGÜN</string>
@@ -73,6 +74,7 @@
     <string name="home_no_reminder">Aktif hatırlatıcı yok</string>
     <string name="home_pending">Onay bekleyen</string>
     <string name="home_low_stock">Stok azaldı</string>
+    <string name="home_missed">Bugün kaçırılan</string>
     <string name="home_menu">Menü</string>
     <string name="menu_supplements">Takviyelerim</string>
     <string name="menu_supplements_sub">Stok kartları</string>
@@ -184,6 +186,7 @@
     <string name="history_empty">Henüz kayıt yok.\nİlk dozunu onayladığında burada görünecek.</string>
     <string name="history_total">Toplam %d</string>
     <string name="history_window">Son 7 gün gösteriliyor.</string>
+    <string name="history_tap_hint">Onaylanmamış bir doza dokunup şimdi aldım diyebilirsin.</string>
 
     <!-- ============ Ayarlar ============ -->
     <string name="settings_title">Ayarlar</string>
@@ -195,6 +198,8 @@
     <string name="perm_battery_ok">Muaf tutuldu</string>
     <string name="perm_battery_no">MUAF DEĞİL — dokun</string>
     <string name="perm_fsi">Tam ekran uyarı izni</string>
+    <string name="perm_overlay">Diğer uygulamaların üzerinde göster</string>
+    <string name="perm_overlay_hint">İsteğe bağlı. Yalnızca saati kullanırken onay ekranı öne gelmiyorsa gerekir.</string>
     <string name="perm_notifications">Bildirim ayarları</string>
     <string name="perm_notifications_sub">Kanal ve titreşim</string>
     <string name="oem_hint">Agresif üretici katmanları (Xiaomi HyperOS vb.) arka planı kısıtlar. Pil muafiyeti verilmeden gece alarmları kaçabilir.</string>
@@ -209,6 +214,9 @@
     <string name="fullscreen_on">Tam ekran uyarı: açık</string>
     <string name="fullscreen_off">Tam ekran uyarı: kapalı</string>
     <string name="fullscreen_sub">Ekranı uyandırır, onay ekranını açar</string>
+    <string name="sound_on">Alarm sesi: açık</string>
+    <string name="sound_off">Alarm sesi: kapalı</string>
+    <string name="sound_sub">Bildirim sesi, 2 saniyede bir tekrarlar</string>
     <string name="field_alert_duration">Titreşim süresi</string>
     <string name="seconds_short">%d sn</string>
     <string name="alert_duration_hint">Onaylayana ya da erteleyene kadar, en fazla bu süre boyunca kesintisiz titrer.</string>

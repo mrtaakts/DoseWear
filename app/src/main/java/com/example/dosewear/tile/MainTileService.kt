@@ -2,8 +2,10 @@ package com.example.dosewear.tile
 
 import androidx.wear.protolayout.ActionBuilders
 import androidx.wear.protolayout.ColorBuilders.argb
+import androidx.wear.protolayout.DimensionBuilders.dp
 import androidx.wear.protolayout.DimensionBuilders.expand
 import androidx.wear.protolayout.DimensionBuilders.sp
+import androidx.wear.protolayout.DimensionBuilders.wrap
 import androidx.wear.protolayout.LayoutElementBuilders
 import androidx.wear.protolayout.ModifiersBuilders
 import androidx.wear.protolayout.ResourceBuilders
@@ -23,60 +25,70 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.guava.future
 
 /**
- * Saat yuzunun yanindaki kart: siradaki doz ya da onay bekleyen dozlar.
+ * Saat yuzunun yanindaki kart: siradaki 5 doz alt alta.
  * Periyodik guncelleme YOK; veri degistiginde Surfaces.refreshTile() ile durtulur.
  */
 class MainTileService : TileService() {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
+    private data class TileData(
+        val rows: List<String>,
+        val footer: String,
+        val accent: Int
+    )
+
     override fun onTileRequest(
         requestParams: RequestBuilders.TileRequest
     ): ListenableFuture<TileBuilders.Tile> = scope.future {
         val repo = DoseRepository.get(applicationContext)
-        val open = repo.logs.openDoses()
-        val pending = open.filter { it.status == DoseStatus.PENDING }
-        val next = repo.nextUpcoming()
+        val pending = repo.logs.openDoses().filter { it.status == DoseStatus.PENDING }
         val (taken, total) = repo.todayAdherence()
 
-        val headline: String
-        val sub: String
-        val accent: Int
-
-        when {
-            pending.isNotEmpty() -> {
-                headline = if (pending.size == 1) pending.first().supplementName
-                else getString(R.string.tile_pending_many, pending.size)
-                sub = getString(
-                    R.string.tile_pending_sub, Fmt.hhmm(pending.first().scheduledAt)
-                )
+        val data = when {
+            // Onay bekleyen varsa oncelik onlarin.
+            pending.isNotEmpty() -> TileData(
+                rows = pending.take(MAX_ROWS).map {
+                    "${Fmt.hhmm(it.scheduledAt)} · ${it.supplementName}"
+                },
+                footer = footer(taken, total),
                 accent = COLOR_AMBER
-            }
-            next != null -> {
-                headline = Fmt.hhmm(next.triggerAt)
-                sub = next.title.ifBlank { getString(R.string.reminder_fallback) }
-                accent = COLOR_MINT
-            }
+            )
+
             else -> {
-                headline = getString(R.string.tile_none)
-                sub = getString(R.string.tile_none_sub)
-                accent = COLOR_STEEL
+                val next = repo.upcoming(MAX_ROWS)
+                if (next.isEmpty()) {
+                    TileData(
+                        rows = listOf(
+                            getString(R.string.tile_none),
+                            getString(R.string.tile_none_sub)
+                        ),
+                        footer = footer(taken, total),
+                        accent = COLOR_STEEL
+                    )
+                } else {
+                    val fallback = getString(R.string.reminder_fallback)
+                    TileData(
+                        rows = next.map {
+                            "${Fmt.hhmm(it.triggerAt)} · ${it.title.ifBlank { fallback }}"
+                        },
+                        footer = footer(taken, total),
+                        accent = COLOR_MINT
+                    )
+                }
             }
         }
-
-        val footer = if (total > 0) getString(R.string.tile_today, taken, total)
-        else getString(R.string.tile_today_none)
 
         TileBuilders.Tile.Builder()
             .setResourcesVersion(RESOURCES_VERSION)
             .setFreshnessIntervalMillis(FRESHNESS_MS)
-            .setTileTimeline(
-                TimelineBuilders.Timeline.fromLayoutElement(
-                    layout(headline, sub, footer, accent)
-                )
-            )
+            .setTileTimeline(TimelineBuilders.Timeline.fromLayoutElement(layout(data)))
             .build()
     }
+
+    private fun footer(taken: Int, total: Int): String =
+        if (total > 0) getString(R.string.tile_today, taken, total)
+        else getString(R.string.tile_today_none)
 
     override fun onTileResourcesRequest(
         requestParams: RequestBuilders.ResourcesRequest
@@ -84,12 +96,7 @@ class MainTileService : TileService() {
         ResourceBuilders.Resources.Builder().setVersion(RESOURCES_VERSION).build()
     }
 
-    private fun layout(
-        headline: String,
-        sub: String,
-        footer: String,
-        accent: Int
-    ): LayoutElementBuilders.LayoutElement {
+    private fun layout(data: TileData): LayoutElementBuilders.LayoutElement {
 
         val openApp = ModifiersBuilders.Modifiers.Builder()
             .setClickable(
@@ -116,15 +123,33 @@ class MainTileService : TileService() {
 
         val column = LayoutElementBuilders.Column.Builder()
             .setWidth(expand())
-            .setHeight(expand())
+            // wrap(): sutun yalnizca icerigi kadar yer kaplasin ki disindaki Box
+            // onu gercekten dikeyde ORTALAYABILSIN. expand() oldugunda icerik
+            // yukariya yapisiyordu.
+            .setHeight(wrap())
             .setHorizontalAlignment(LayoutElementBuilders.HORIZONTAL_ALIGN_CENTER)
-            .setModifiers(openApp)
             .addContent(
-                text("DOSEWEAR", 11f, COLOR_STEEL, LayoutElementBuilders.FONT_WEIGHT_BOLD)
+                text("DOSEWEAR", 10f, COLOR_STEEL, LayoutElementBuilders.FONT_WEIGHT_BOLD)
             )
-            .addContent(text(headline, 20f, accent, LayoutElementBuilders.FONT_WEIGHT_BOLD, 2))
-            .addContent(text(sub, 13f, COLOR_TEXT, LayoutElementBuilders.FONT_WEIGHT_NORMAL, 2))
-            .addContent(text(footer, 12f, COLOR_STEEL, LayoutElementBuilders.FONT_WEIGHT_NORMAL))
+            .addContent(spacer(5f))
+            .apply {
+                data.rows.forEachIndexed { index, row ->
+                    if (index > 0) addContent(spacer(2f))
+                    // Ilk satir vurgulu; sonrakiler daha sonik ki goz once
+                    // siradakine gitsin.
+                    addContent(
+                        if (index == 0) text(
+                            row, 14f, data.accent, LayoutElementBuilders.FONT_WEIGHT_BOLD
+                        ) else text(
+                            row, 12f, COLOR_TEXT, LayoutElementBuilders.FONT_WEIGHT_NORMAL
+                        )
+                    )
+                }
+            }
+            .addContent(spacer(6f))
+            .addContent(
+                text(data.footer, 10f, COLOR_STEEL, LayoutElementBuilders.FONT_WEIGHT_NORMAL)
+            )
             .build()
 
         return LayoutElementBuilders.Box.Builder()
@@ -132,9 +157,13 @@ class MainTileService : TileService() {
             .setHeight(expand())
             .setVerticalAlignment(LayoutElementBuilders.VERTICAL_ALIGN_CENTER)
             .setHorizontalAlignment(LayoutElementBuilders.HORIZONTAL_ALIGN_CENTER)
+            .setModifiers(openApp)
             .addContent(column)
             .build()
     }
+
+    private fun spacer(height: Float): LayoutElementBuilders.Spacer =
+        LayoutElementBuilders.Spacer.Builder().setHeight(dp(height)).build()
 
     private fun text(
         value: String,
@@ -157,6 +186,9 @@ class MainTileService : TileService() {
 
     companion object {
         private const val RESOURCES_VERSION = "1"
+
+        /** Kartta gosterilecek en fazla doz satiri. */
+        private const val MAX_ROWS = 5
 
         /** Sistem kartı en fazla bu sıklıkta kendi tazeler (pil dostu, 30 dk). */
         private const val FRESHNESS_MS = 30L * 60L * 1000L
